@@ -1,0 +1,178 @@
+
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ include file="../header/admin_header.html"%>
+<% int i = 1;%>
+
+<h2>Students </h2>
+
+<hr>
+<form method="post" action="/student/admin/search/student" >
+    <table>
+        <tr><td> <small>(Search Batches,Name)</small></td>
+            <td> <input placeholder="Search" type="text" required="" name="place" class="form-control" style="width: 300px"></td>
+            <td>  &nbsp;&nbsp;&nbsp;&nbsp;</td>
+            <td> <input type="submit" class="btn btn-success small" value="Search" ></td>
+            <td>  &nbsp;&nbsp;&nbsp;&nbsp;</td>
+            </form>
+        
+
+        <form method="post" action="/student/admin/search/student/batch" >
+            <td> <small>(Search Batches)</small></td>
+            <td><select class="form-control" name="place" style="width: 300px">
+                    <c:forEach items="${batches}" var="b">
+                        <option value="<c:out value="${b.batchId}"/>">  <c:out value="${b.batchName}"/>  </option>
+                    </c:forEach>    
+                </select>
+
+            </td>
+            <td>  &nbsp;&nbsp;&nbsp;&nbsp;</td>
+            <td> <input type="submit" class="btn btn-success small" value="Search" ></td>
+            <td>  &nbsp;&nbsp;&nbsp;&nbsp;</td>
+        </form>
+
+         <td> <a href="/student/admin/admin_view_students" class="btn btn-primary small">Refresh</a></td>
+        </tr>
+    </table>
+
+    <hr>
+
+
+
+
+
+
+
+
+
+
+
+    <div class="row">
+
+        <!--/////// /////-------LEFT SIDE TABLE-----// //////////////////-->
+
+        <div class="col-sm-3 col-md-6 col-lg-8"  >
+
+
+
+            <table  class="table table-hover table-head table-responsive ">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Name(G) <br> Batch</th>
+                         
+                        <th>House & <br> Place</th>
+                        <th>Parent <br> Details </th>
+                        <th>Contact</th>
+
+                        
+                        <th>Status</th>
+                        <th>-</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <c:forEach items="${students}" var="b">
+                        <tr>
+                            <td>  <%=i++%> </td>
+                            <td>  <c:out value="${b.firstName}"/> <c:out value="${b.lastNme}"/> <br>
+                                <span style="color: red"> Batch : </span><c:out value=""/><c:out value="${b.batches.batchName}"/> 
+                           
+                                <br><span style="color: red">DOB : </span> <c:out value="${b.dob}"/>
+                            </td>
+                            
+                            <td>  <c:out value="${b.houseName}"/> <br> <c:out value="${b.place}"/></td>
+                            <td>  <c:out value="${b.parentName}"/> <br> <c:out value="${b.parentNo}"/></td>
+                            <td>  <c:out value="${b.emailId}"/></td>
+ 
+                            <td>  <c:out value="${b.login.type}"/></td>
+
+                            <td> <a class=" btn-link"  href="/student/admin/admin_approve/${b.login.loginId}/Login/loginId/type/student_blocked/admin_view_students">Block</a> 
+                                <br> <a class=" btn-link"  href="/student/admin/admin_approve/${b.login.loginId}/Login/loginId/type/student/admin_view_students">Unblock</a></td>
+
+
+                        </tr>
+                    </c:forEach>
+
+                </tbody>
+            </table>
+
+        </div>
+
+        <!--////////////////-------CENTER LINE-----/////////////////////////////////-->
+        <div class="vl" style="background-color:grey"> <pre> <pre></div> 
+
+<!--////////////////-------RIGHT SIDE FORM-----/////////////////////////////////-->
+
+
+
+    <div class="col-sm-9 col-md-6 col-lg-2" style="">
+ <form method="post" action="/student/admin/admin_add_student_action">
+     <h2> Add New </h2>
+     <table >
+         
+             <tr>
+                 <td><small>First Name</small>
+                     <input type="text"   required name="firstName" class="single-input" placeholder="First Name" />
+                    <small>Last Name</small> <input type="text"   required name="lastNme" class="single-input" placeholder="Second Name" /></td>
+             </tr>
+             <tr>
+                <td><small>Batch</small>
+                    <select name="batches.batchId">
+                                            <c:forEach items="${batches}" var="b">
+                             <option value="<c:out value="${b.batchId}"/>">  
+                                                    <c:out value="${b.batchName}"/> 
+                             </optio>
+                                                </c:forEach>
+                     </select>
+                 </td>
+             </tr>
+             <tr>
+                 <td><small>Date of Birth</small><input type="date"  name="dob" class="single-input"   /></td>
+             </tr>
+              
+             <tr>
+                 <td><small>House Name</small>
+                     <input type="text"   required name="houseName" class="single-input" placeholder="houseName" /></td>
+             </tr>
+             <tr>
+                 <td><small>Place</small>
+                     <input type="text"   required name="place" class="single-input" placeholder="Place" /></td>
+             </tr>
+             <tr>
+                 <td>  <input type="text"   required name="emailId" class="single-input" placeholder="E-mail" /></td>
+             </tr>
+             
+             <tr>
+                 <td><small>Parent Name</small>
+                     <input type="text"   required name="parentName" class="single-input" placeholder="Parent Name" />
+                    <small>Parent No</small> <input type="text"   required name="parentNo" class="single-input" placeholder="Parent No" /></td>
+             </tr>
+             
+             <tr>
+                 <td><small>Username</small>
+                     <input type="text"   required name="userName" class="single-input" placeholder="Username" />
+                    <small>Password</small> <input type="text"   required name="password" class="single-input" placeholder="Password" /></td>
+             </tr>
+              
+              
+             <tr>
+                 <td>
+                     <input type="submit"  class="single-input genric-btn primary"  /></td>
+             </tr>
+         </tbody>
+     </table>
+
+    
+            
+  </form>
+
+</div>
+
+
+</div>
+
+                    <%@ include file="../header/footer.html"%>
+
+
+
+
+

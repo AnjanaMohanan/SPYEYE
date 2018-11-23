@@ -1,0 +1,154 @@
+
+
+
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+
+<%@ include file="../header/admin_header.html"%>
+<% int i = 1;%>
+
+<h2>Tutors</h2>
+
+<hr>
+<form method="post" action="/student/admin/search/tutor" >
+
+    <table >
+        <tr>
+            <td> <input placeholder="Search" type="text" required="" name="place" class="form-control" style="width: 300px"></td>
+            <td>  &nbsp;&nbsp;&nbsp;&nbsp;</td>
+            <td> <input type="submit" class="btn btn-success small" value="Search" ></td>
+            <td>  &nbsp;&nbsp;&nbsp;&nbsp;</td>
+            <td> <a href="/student/admin/admin_view_tutors" class="btn btn-primary small">Refresh</a></td>
+        </tr>
+    </table>
+
+</form>
+<hr>
+
+<div class="row">
+
+    <!--/////// /////-------LEFT SIDE TABLE-----// //////////////////-->
+
+    <div class="col-sm-3 col-md-6 col-lg-8"  >
+
+
+
+        <table  class="table table-hover table-head table-responsive ">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Name(G)</th>
+                    <th>Main Subject </th>
+                    <th>Qualification</th>
+                    <th>Contact </th>
+                    <th>Status</th>
+                    <th>-</th>
+                </tr>
+            </thead>
+            <tbody>
+                <c:forEach items="${tutors}" var="b">
+                    <tr>
+                        <td>  <%=i++%> </td>
+                        <td>  <c:out value="${b.firstName}"/> <c:out value="${b.lastName}"/>(<c:out value="${b.gender}"/>) </td> 
+                        <td>  <c:out value="${b.subject.subjectName}"/></td>
+                        <td>  <c:out value="${b.qualification}"/></td>
+                        <td>  <c:out value="${b.phone}"/> <br> <c:out value="${b.email}"/></td>
+                        <td>  <c:out value="${b.login.type}"/></td>
+                        <td> <a class="text-danger"  href="/student/admin/admin_approve/${b.login.loginId}/Login/loginId/type/tutor_blocked/admin_view_tutors">Block</a> 
+                            <br> <a class="text-primary"  href="/student/admin/admin_approve/${b.login.loginId}/Login/loginId/type/tutor/admin_view_tutors">Unblock</a></td>
+
+                    </tr>
+                </c:forEach>
+
+            </tbody>
+        </table>
+
+    </div>
+
+    <!--////////////////-------CENTER LINE-----/////////////////////////////////-->
+    <div class="vl" style="background-color: grey"> <pre> <pre></div> 
+
+<!--////////////////-------RIGHT SIDE FORM-----/////////////////////////////////-->
+
+
+
+    <div class="col-sm-9 col-md-6 col-lg-2" style="">
+ <form method="post" action="/student/admin/admin_add_tutor_action">
+     <h2> Add New </h2>
+     <table >
+         
+             <tr>
+                 <td><small>First Name:</small><br>
+                     <input type="text"   required name="firstName" class="single-input" placeholder="First Name" />
+                    <small>Last Name:</small> <br>
+                    <input type="text"   required name="lastName" class="single-input" placeholder="Second Name" /></td>
+             </tr>
+             
+             
+              <tr>
+                 <td><small>Subject</small><br>
+                     <select name="subject.subjectId">
+                                        <c:forEach items="${subjects}" var="b">
+                             <option value="<c:out value="${b.subjectId}"/>">  
+                                                <c:out value="${b.subjectName}"/>
+                             </optio>
+                                            </c:forEach>
+                     </select>
+                 
+                 
+                 
+                 
+                 </td>
+             </tr>
+             
+            
+             
+             
+             <tr>
+                 <td><small>Date of Birth</small><br>
+                     <input type="date"  name="dob" class="single-input"  style="height: 30px" /></td>
+             </tr>
+             <tr>
+                 <td><small>Gender</small><br>
+                     <select name='gender'><option>Male</option><option>Female</option></select></td>
+             </tr>
+             <tr>
+                 <td><small>Qualification</small><br>
+                     <input type="text"   required name="qualification" class="single-input" placeholder="Qualification" /></td>
+             </tr>
+             <tr>
+                 <td><small>Phone:</small><br>
+                     <input type="text"   required name="phone" class="single-input" placeholder="Phone" /></td>
+             </tr>
+             <tr>
+                 <td><small>E - mail:</small><br>
+                     <input type="email"  name="email" class="single-input" style="height: 30px" placeholder="E-mail" /></td>
+             </tr>
+              <tr>
+                 <td><small>username:</small><br>
+                     <input type="text"   required name="userName" class="single-input" placeholder="Username" />
+                    <small>Password:</small><br>
+                    <input type="text"   required name="password" class="single-input" placeholder="Password" /></td>
+             </tr>
+             <tr>
+                 <td>
+                     <input type="submit"  class="single-input genric-btn primary"  /></td>
+             </tr>
+         </tbody>
+     </table>
+
+    
+            
+  </form>
+
+</div>
+
+
+</div>
+
+                <%@ include file="../header/footer.html"%>
+
+
+
+
+
